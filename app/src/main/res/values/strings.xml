@@ -2,8 +2,14 @@
     <string name="app_name">GuessNum</string>
     <string name="game_description_start_game">開始遊戲！</string>
     <string name="game_description_out_of_range">數字超出範圍。</string>
-    <string name="game_description_correct_num">恭喜答對了，總共猜了 %s 次。</string>
+    <string name="game_description_correct_num">恭喜答對了，總共猜了 %d 次。</string>
     <string name="game_description_wrong_and_bigger">答錯了，再大一點。</string>
     <string name="game_description_wrong_and_smaller">答錯了，再小一點。</string>
     <string name="game_description_empty_input">請輸入數字。</string>
+    <string name="activity_main_num_range">數字範圍：</string>
+    <string name="activity_main_connection">~</string>
+    <string name="activity_main_guess_times">猜測次數：</string>
+    <string name="activity_main_please_enter_num">請輸入數字</string>
+    <string name="activity_main_btn_guess">Guess</string>
+    <string name="activity_main_btn_reset">Reset</string>
 </resources>

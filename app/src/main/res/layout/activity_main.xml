@@ -1,114 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tv_numRangeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="數字範圍："
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <data>
+        <variable
+            name="guessNumViewModel"
+            type="com.rick.guessnum.vm.GuessNumViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/tv_minNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_numRangeTitle"
-        app:layout_constraintStart_toEndOf="@+id/tv_numRangeTitle" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_maxNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="100"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_numRangeTitle"
-        app:layout_constraintStart_toEndOf="@+id/tv_connection" />
+        <TextView
+            android:id="@+id/tv_numRangeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/activity_main_num_range"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_connection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="~"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_numRangeTitle"
-        app:layout_constraintStart_toEndOf="@+id/tv_minNum" />
+        <TextView
+            android:id="@+id/tv_minNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{guessNumViewModel.minNumLiveData.toString()}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_numRangeTitle"
+            app:layout_constraintStart_toEndOf="@+id/tv_numRangeTitle" />
 
-    <TextView
-        android:id="@+id/tv_guessTimesTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="猜測次數："
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="@+id/tv_numRangeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tv_numRangeTitle" />
+        <TextView
+            android:id="@+id/tv_maxNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{guessNumViewModel.maxNumLiveData.toString()}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_numRangeTitle"
+            app:layout_constraintStart_toEndOf="@+id/tv_connection" />
 
-    <TextView
-        android:id="@+id/tv_guessTimes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="0"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_guessTimesTitle"
-        app:layout_constraintStart_toEndOf="@+id/tv_guessTimesTitle" />
+        <TextView
+            android:id="@+id/tv_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/activity_main_connection"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_numRangeTitle"
+            app:layout_constraintStart_toEndOf="@+id/tv_minNum" />
 
-    <TextView
-        android:id="@+id/tv_resDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="開始遊戲！"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_guessTimesTitle" />
+        <TextView
+            android:id="@+id/tv_guessTimesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/activity_main_guess_times"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintStart_toStartOf="@+id/tv_numRangeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tv_numRangeTitle" />
 
-    <EditText
-        android:id="@+id/ed_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="請輸入數字"
-        android:inputType="number"
-        android:maxLength="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_resDescription" />
+        <TextView
+            android:id="@+id/tv_guessTimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{guessNumViewModel.guessTimesLiveData.toString()}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_guessTimesTitle"
+            app:layout_constraintStart_toEndOf="@+id/tv_guessTimesTitle" />
 
-    <Button
-        android:id="@+id/btn_guess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Guess"
-        app:layout_constraintEnd_toEndOf="@+id/ed_input"
-        app:layout_constraintStart_toStartOf="@+id/ed_input"
-        app:layout_constraintTop_toBottomOf="@+id/ed_input" />
+        <TextView
+            android:id="@+id/tv_resDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_guessTimesTitle"
+            app:resDescription="@{guessNumViewModel.resDescriptionLiveData}"
+            app:guessTimes="@{guessNumViewModel.guessTimesLiveData}"/>
 
-    <Button
-        android:id="@+id/btn_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Reset"
-        app:layout_constraintEnd_toEndOf="@+id/ed_input"
-        app:layout_constraintStart_toStartOf="@+id/ed_input"
-        app:layout_constraintTop_toBottomOf="@+id/btn_guess" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/ed_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:afterTextChanged="@{guessNumViewModel::afterTextChanged}"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/activity_main_please_enter_num"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="3"
+            android:text="@{guessNumViewModel.inputMutableLiveData.toString()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_resDescription" />
+
+        <Button
+            android:id="@+id/btn_guess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:enabled="@{guessNumViewModel.isGameOverOngoingLiveData()}"
+            android:onClick="@{()->guessNumViewModel.guessNum(edInput.getText().toString())}"
+            android:text="@string/activity_main_btn_guess"
+            app:layout_constraintEnd_toEndOf="@+id/ed_input"
+            app:layout_constraintStart_toStartOf="@+id/ed_input"
+            app:layout_constraintTop_toBottomOf="@+id/ed_input" />
+
+        <Button
+            android:id="@+id/btn_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:onClick="@{()->guessNumViewModel.startGame()}"
+            android:text="@string/activity_main_btn_reset"
+            app:layout_constraintEnd_toEndOf="@+id/ed_input"
+            app:layout_constraintStart_toStartOf="@+id/ed_input"
+            app:layout_constraintTop_toBottomOf="@+id/btn_guess" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

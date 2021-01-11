@@ -1,6 +1,7 @@
 package com.rick.guessnum.vm;
 
 import android.text.Editable;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,14 +16,14 @@ import java.util.Random;
  * 2. 理論上，ViewModel 不應該涉 Context 相關的處理。
  */
 public class GuessNumViewModel extends ViewModel {
-    private int answerNum;
+    private static final String TAG = GuessNumViewModel.class.getSimpleName();
 
+    private int answerNum;
     private int minNum;
     private int maxNum;
-
     private int guessTimes;
 
-    private final MutableLiveData<GameState> gameStateMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isGameOngoingMutableLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> minNumMutableLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> maxNumMutableLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> guessTimesMutableLiveData = new MutableLiveData<>();
@@ -30,7 +31,7 @@ public class GuessNumViewModel extends ViewModel {
     private final MutableLiveData<String> inputMutableLiveData = new MutableLiveData<>();
 
     public void startGame() {
-        gameStateMutableLiveData.postValue(GameState.ONGOING);
+        isGameOngoingMutableLiveData.postValue(true);
 
         minNum = GameConstant.GAME_START_NUMBER;
         minNumMutableLiveData.postValue(minNum);
@@ -48,6 +49,8 @@ public class GuessNumViewModel extends ViewModel {
     }
 
     public void guessNum(String inputNum) {
+        Log.d(TAG, "guessNum: " + inputNum);
+
         if (inputNum.isEmpty()) {
             resDescriptionMutableLiveData.postValue(ResultDescription.GAME_DESCRIPTION_EMPTY_INPUT);
         } else {
@@ -58,7 +61,7 @@ public class GuessNumViewModel extends ViewModel {
                 guessTimes++;
                 guessTimesMutableLiveData.postValue(guessTimes);
                 if (answerNum == input) {
-                    gameStateMutableLiveData.postValue(GameState.GAME_OVER);
+                    isGameOngoingMutableLiveData.postValue(false);
                     resDescriptionMutableLiveData.postValue(ResultDescription.GAME_DESCRIPTION_CORRECT_NUM);
                 } else if (answerNum > input) {
                     resDescriptionMutableLiveData.postValue(ResultDescription.GAME_DESCRIPTION_WRONG_AND_BIGGER);
@@ -81,10 +84,6 @@ public class GuessNumViewModel extends ViewModel {
         }
     }
 
-    public enum GameState {
-        ONGOING, GAME_OVER
-    }
-
     public enum ResultDescription {
         GAME_DESCRIPTION_START_GAME, // 開始遊戲！
         GAME_DESCRIPTION_EMPTY_INPUT, // 請輸入數字！
@@ -97,8 +96,8 @@ public class GuessNumViewModel extends ViewModel {
     /**
      * 以 LiveData 的方式提供呼叫，能夠避免被修改。
      */
-    public LiveData<GameState> getGameStateLiveData() {
-        return gameStateMutableLiveData;
+    public LiveData<Boolean> isGameOverOngoingLiveData() {
+        return isGameOngoingMutableLiveData;
     }
 
     public LiveData<Integer> getMinNumLiveData() {
@@ -117,7 +116,11 @@ public class GuessNumViewModel extends ViewModel {
         return resDescriptionMutableLiveData;
     }
 
-    public LiveData<String> getInputLiveData() {
+    public LiveData<String> getInputMutableLiveData() {
         return inputMutableLiveData;
+    }
+
+    public void afterTextChanged(Editable s) {
+        checkInputNumAfter(s);
     }
 }
