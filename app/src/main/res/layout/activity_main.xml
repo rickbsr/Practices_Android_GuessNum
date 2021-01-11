@@ -81,18 +81,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:guessTimes="@{guessNumViewModel.guessTimesLiveData}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_guessTimesTitle"
-            app:resDescription="@{guessNumViewModel.resDescriptionLiveData}"
-            app:guessTimes="@{guessNumViewModel.guessTimesLiveData}"/>
+            app:resDescription="@{guessNumViewModel.resDescriptionLiveData}" />
 
         <EditText
             android:id="@+id/ed_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:afterTextChanged="@{guessNumViewModel::afterTextChanged}"
             android:ems="10"
             android:gravity="center"
             android:hint="@string/activity_main_please_enter_num"
@@ -100,6 +99,7 @@
             android:inputType="number"
             android:maxLength="3"
             android:text="@{guessNumViewModel.inputMutableLiveData.toString()}"
+            app:guessNumViewModel="@{guessNumViewModel}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_resDescription" />

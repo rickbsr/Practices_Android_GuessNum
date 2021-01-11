@@ -1,45 +1,51 @@
 package com.rick.guessnum.utils;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
-import com.rick.guessnum.R;
+import com.rick.guessnum.enums.ResultDescriptionEnum;
 import com.rick.guessnum.vm.GuessNumViewModel;
+
+import static com.rick.guessnum.enums.ResultDescriptionEnum.GAME_DESCRIPTION_CORRECT_NUM;
+import static com.rick.guessnum.enums.ResultDescriptionEnum.GAME_DESCRIPTION_INIT;
 
 public class BindingAdapterUtils {
 
-    @BindingAdapter(value = {"resDescription", "guessTimes"}, requireAll = false)
-    public static void setResDescriptionStr(TextView textView, GuessNumViewModel.ResultDescription resDescription, int guessTimes) {
-        if (resDescription == null) return;
+    @BindingAdapter(value = {"resDescription", "guessTimes"})
+    public static void setResDescriptionStr(TextView textView, ResultDescriptionEnum resDescription, int guessTimes) {
 
-        final String resDescriptionStr;
-        switch (resDescription) {
-            case GAME_DESCRIPTION_START_GAME:
-                resDescriptionStr = getDescriptionStrStr(textView, R.string.game_description_start_game);
-                break;
-            case GAME_DESCRIPTION_EMPTY_INPUT:
-                resDescriptionStr = getDescriptionStrStr(textView, R.string.game_description_empty_input);
-                break;
-            case GAME_DESCRIPTION_CORRECT_NUM:
-                resDescriptionStr = String.format(getDescriptionStrStr(textView, R.string.game_description_correct_num), guessTimes);
-                break;
-            case GAME_DESCRIPTION_OUT_OF_RANGE:
-                resDescriptionStr = getDescriptionStrStr(textView, R.string.game_description_out_of_range);
-                break;
-            case GAME_DESCRIPTION_WRONG_AND_BIGGER:
-                resDescriptionStr = getDescriptionStrStr(textView, R.string.game_description_wrong_and_bigger);
-                break;
-            case GAME_DESCRIPTION_WRONG_AND_SMALLER:
-                resDescriptionStr = getDescriptionStrStr(textView, R.string.game_description_wrong_and_smaller);
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + resDescription);
+        if (!GAME_DESCRIPTION_INIT.equals(resDescription)) {
+            String resDescriptionStr = textView.getResources().getString(resDescription.getResourceId());
+
+            if (GAME_DESCRIPTION_CORRECT_NUM.equals(resDescription)) {
+                resDescriptionStr = String.format(resDescriptionStr, guessTimes);
+            }
+
+            textView.setText(resDescriptionStr);
         }
-        textView.setText(resDescriptionStr);
     }
 
-    private static String getDescriptionStrStr(TextView textView, int resDescriptionStrId) {
-        return textView.getResources().getString(resDescriptionStrId);
+    @BindingAdapter(value = {"guessNumViewModel"})
+    public static void checkedInputText(EditText editText, GuessNumViewModel guessNumViewModel) {
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                guessNumViewModel.checkedInputNum(s.toString());
+            }
+        });
     }
 }
